@@ -33,43 +33,22 @@ int tree_height(const binary_tree_t *tree)
 }
 
 /**
- * binary_tree_balance - measures balance factor of a binary tree
- * @tree: pointer to root node of the tree to measure balance factor
+ * binary_tree_size - measures the size of a binary tree
+ * @tree: pointer to the root node of the tree to measure the size
  *
- * Return: balance factor else 0
+ * Return: size of tree else 0
  */
-int binary_tree_balance(const binary_tree_t *tree)
+int tree_size(const binary_tree_t *tree)
 {
-	int left_height, right_height = 0;
+	int count = 0;
 
 	if (tree == NULL)
 		return (0);
+	count += 1;
+	count += tree_size(tree->left);
+	count += tree_size(tree->right);
 
-	left_height = tree_height(tree->left);
-	right_height = tree_height(tree->right);
-
-	return (left_height - right_height);
-}
-
-/**
- * binary_tree_is_full - checks if a binary is full
- * @tree: pointer to the root node to check
- *
- * Return: 1 if tree is complete else 0
- */
-int binary_tree_is_full(const binary_tree_t *tree)
-{
-	int left, right;
-
-	if (tree == NULL)
-		return (0);
-	if (!tree->left && !tree->right)
-		return (1);
-
-	left = binary_tree_is_full(tree->left);
-	right = binary_tree_is_full(tree->right);
-
-	return (left & right);
+	return (count);
 }
 
 /**
@@ -80,14 +59,21 @@ int binary_tree_is_full(const binary_tree_t *tree)
  */
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	int balanced, full;
+	int i, max_nodes, size, height, power;
 
 	if (tree == NULL)
 		return (0);
-	balanced = binary_tree_balance(tree);
-	full = binary_tree_is_full(tree);
 
-	if (((!balanced) == 1) && (full == 1))
+	size = tree_size(tree);
+	height = tree_height(tree);
+	power = 1;
+
+	for (i = 0; i < height; i++)
+		power *= 2;
+
+	max_nodes = power - 1;
+
+	if (size == max_nodes)
 		return (1);
 
 	return (0);
