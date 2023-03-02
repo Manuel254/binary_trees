@@ -15,7 +15,7 @@ int max(int left, int right)
 }
 
 /**
- * binary_tree_height - measures the height of a binary tree
+ * tree_height - measures the height of a binary tree
  * @tree: pointer to root node of tree to measure height
  *
  * Return: height of tree else 0
